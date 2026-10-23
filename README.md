@@ -15,7 +15,7 @@ graph TD
 
     subgraph Hipervisor [VirtualBox / VMware]
         subgraph WAN [Red Externa / Untrusted]
-            Kali[Kali Linux <br/> Máquina Atacante <br/> IP: 192.168.100.10]
+            Kali[Kali Linux <br/> Máquina Atacante <br/> IP: 192.168.x.x]
         end
 
         pfSense[pfSense Firewall / Router <br/> WAN: 192.168.100.1 <br/> LAN: 192.168.1.1]
