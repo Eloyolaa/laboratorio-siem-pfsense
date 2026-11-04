@@ -10,6 +10,7 @@ Diseñar, implementar y documentar un entorno controlado de red para analizar el
 ### 1. Firewall Perimetral (pfSense)
 * **Interfaz WAN:** Conectada a la red externa con la dirección `192.168.100.1/24`.
 * **Interfaz LAN:** Configurada con la puerta de enlace `192.168.1.1` para aislar, segmentar y enrutar el tráfico del laboratorio (`192.168.1.0/24`).
+* **Interfaz OPT1 (Gestión):** Asignada al adaptador Host-Only con la IP estática `192.168.56.2`, estableciendo un canal aislado desde el equipo anfitrión sin exponer a la red física.
 
 ### 2. Servidor SIEM (Ubuntu Server & Wazuh)
 El servidor opera bajo una arquitectura de **doble adaptador de red** para separar el tráfico analítico del canal de administración:
