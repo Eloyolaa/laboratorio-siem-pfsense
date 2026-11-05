@@ -5,24 +5,26 @@ Entorno controlado de red diseñado para simular ataques externos, auditoría pe
 ## Topología y Arquitectura General
 
 ```mermaid
-graph TD
-    subgraph HostWindows [PC Anfitrión / Windows]
-        Browser[Navegador Web / Dashboard y WebGUI]
+graph LR
+    subgraph HostWindows [PC Administración / Windows]
+        Browser[Navegador Web <br/> Wazuh Dashboard & pfSense WebGUI]
     end
 
-    subgraph Hipervisor [VirtualBox]
-        subgraph WAN [Red Externa]
-            Kali[Kali Linux / Atacante / 192.168.100.x]
+    subgraph Hipervisor [VirtualBox / VMware]
+        direction TB
+        subgraph WAN [Red Externa / Untrusted]
+            Kali[Kali Linux <br/> Máquina Atacante <br/> IP: 192.168.x.x]
         end
 
-        pfSense[pfSense / WAN: 192.168.100.1 / LAN: 192.168.1.1]
+        pfSense[pfSense Firewall / Router <br/> WAN: 192.168.100.1 <br/> LAN: 192.168.1.1]
 
-        subgraph LAN [Red Interna]
-            Ubuntu[Ubuntu Server / Wazuh / 192.168.1.10]
+        subgraph LAN [Red Interna / Trusted]
+            Ubuntu[Servidor Ubuntu <br/> Wazuh Manager & Agente <br/> IP: 192.168.1.10]
         end
 
-        Kali -->|Tráfico Externo| pfSense
-        pfSense -->|Segmentación| Ubuntu
-        Browser -.->|Gestión| pfSense
-        Browser -.->|Gestión SIEM| Ubuntu
+        Kali -->|Ataques / Escaneos / Tráfico Externo| pfSense
+        pfSense -->|Inspección / Reglas de Bloqueo| Ubuntu
     end
+
+    Browser -.->|Acceso Administrativo| pfSense
+    Browser -.->|Acceso a Consola SIEM| Ubuntu
